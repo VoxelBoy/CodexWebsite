@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faster Prototyping with Unity's DOTS Stack</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    main {
+      padding-top: 3rem;
+    }
+    .article {
+      max-width: 840px;
+      margin: 0 auto 4rem;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 1.5rem;
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      box-shadow: 0 15px 40px rgba(15, 23, 42, 0.45);
+    }
+    .article h1 {
+      margin-top: 0;
+      font-size: clamp(2.2rem, 4vw, 2.8rem);
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      color: rgba(148, 163, 184, 0.75);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+    .article pre {
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.75);
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">Yilmaz Kiymaz</div>
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="index.html">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <article class="article">
+      <p class="article-meta">
+        <span>March 18, 2024</span>
+        <span>DOTS · Performance · Workflows</span>
+      </p>
+      <h1>Faster Prototyping with Unity's DOTS Stack</h1>
+      <p>Unity&rsquo;s Data-Oriented Technology Stack has matured to the point where I use it for the earliest prototypes, not just end-game optimizations. The ability to express gameplay as data transformations unlocks workflows that are impossible with traditional, component-driven hierarchies.</p>
+      <h2>Compose systems in layers</h2>
+      <p>I start every prototype with a thin <code>IAspect</code> layer that exposes the data a designer actually cares about. Gameplay systems then operate on the aspect, not raw components. Here&rsquo;s a simplified example from our vehicle swarm tests:</p>
+      <pre><code>public readonly partial struct VehicleAspect : IAspect
+{
+    public readonly RefRO&lt;VehicleStats&gt; Stats;
+    public readonly RefRW&lt;SteeringState&gt; Steering;
+    public readonly RefRW&lt;LocalTransform&gt; Transform;
+
+    public void Integrate(float deltaTime)
+    {
+        var steering = Steering.ValueRW;
+        steering.Velocity += steering.Acceleration * deltaTime;
+        steering.Velocity = math.clamp(steering.Velocity, 0f, Stats.ValueRO.MaxSpeed);
+        Transform.ValueRW.Position += steering.Velocity * steering.Direction * deltaTime;
+    }
+}
+</code></pre>
+      <p>Designers tweak <code>VehicleStats</code> in a structured authoring window, and automated tests assert bounds so we never publish unsafe values.</p>
+      <h2>Jobs drive the iteration loop</h2>
+      <p>The Burst compiler gives immediate feedback: if a new behaviour introduces an allocation or sync point, the job debugger screams at you. We integrate this into CI so every pull request validates job safety. When we want to visualize data, an editor-only <code>SystemAPI.Query</code> draws gizmos that never ship to players.</p>
+      <h2>Hybrid components where they matter</h2>
+      <p>Not every subsystem is ready for DOTS. Audio, UI, and bespoke physics stay on GameObjects until the performance profile says otherwise. Hybrid components give me the runway to migrate pieces gradually without breaking designers&rsquo; prefabs.</p>
+      <p>If you&rsquo;re modernizing a long-running Unity project, adopting DOTS incrementally keeps momentum high. Start with the systems that gate your iteration speed, enforce Burst-friendly coding standards, and layer in automated validation early.</p>
+    </article>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; <span id="year"></span> Yilmaz Kiymaz. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

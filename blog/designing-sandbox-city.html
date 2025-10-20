@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Designing Sandbox City for Millions of Creative Players</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    main {
+      padding-top: 3rem;
+    }
+    .article {
+      max-width: 840px;
+      margin: 0 auto 4rem;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 1.5rem;
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      box-shadow: 0 15px 40px rgba(15, 23, 42, 0.45);
+    }
+    .article h1 {
+      margin-top: 0;
+      font-size: clamp(2.2rem, 4vw, 2.8rem);
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      color: rgba(148, 163, 184, 0.75);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+    .article p, .article li {
+      color: var(--text-muted);
+    }
+    .article img {
+      width: 100%;
+      border-radius: 1rem;
+      margin: 1.5rem 0;
+    }
+    .article footer {
+      background: none;
+      border: none;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">Yilmaz Kiymaz</div>
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="index.html">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <article class="article">
+      <p class="article-meta">
+        <span>May 2, 2024</span>
+        <span>Sandbox City · Live Ops · Unity</span>
+      </p>
+      <h1>Designing Sandbox City for Millions of Creative Players</h1>
+      <p>Sandbox City started as a passion project: a place where creators could drop in, sketch a game mechanic, and immediately share it with friends. Scaling that idea to millions of players required a deliberate approach to system design, a relentless focus on iteration speed, and an obsession with giving players trustworthy tools.</p>
+      <h2>Designing for safe experimentation</h2>
+      <p>Sandbox City is driven by real-time simulation systems—physics, AI, economy, and social spaces—that players can bend without breaking. We built our runtime sandboxing layer on top of Unity&rsquo;s <strong>Entity Component System (ECS)</strong> so creators can author logic with high-level nodes that compile down to Burst-compiled jobs. Any experiment executes in an isolated world stream, and the engine only merges state back into the shared shard after validation checks succeed.</p>
+      <p>This approach lets us ship new gameplay building blocks weekly. Designers define constraints as C# attributes in our authoring toolkit, while creators drag-and-drop behaviours that are guaranteed to perform. The combination keeps user-generated content safe and performant without slowing players down.</p>
+      <h2>Scaling tooling beyond the core team</h2>
+      <p>Internal tooling had to be just as polished as the player-facing UI. We invested early in a <em>toolkit guild</em>: a small group inside Sandbox City that maintains our scripting language, metrics dashboards, and release automation. Their mandate is to ship user-facing features only when the supporting tools are ready. That discipline means even our live ops team can spin up seasonal events without engineering help.</p>
+      <ul>
+        <li><strong>Prefab recipes</strong> generate best-practice setups for creators and reduce the risk of misconfigured physics scenes.</li>
+        <li><strong>Scenario replays</strong> capture Burst job traces so we can reproduce creator bugs in seconds.</li>
+        <li><strong>Zero-downtime publishing</strong> keeps community hubs live while updates stream in.</li>
+      </ul>
+      <h2>Lessons for other live UGC experiences</h2>
+      <p>Working on Sandbox City has reinforced a few principles that apply to any live UGC platform:</p>
+      <ol>
+        <li><strong>Guardrails beat gatekeeping.</strong> Expose powerful systems, but bake in constraints so creators can move fast without risking the platform.</li>
+        <li><strong>Invest in observability.</strong> Our creator analytics pipeline feeds directly into design decisions; without it, we&rsquo;d be guessing where to allocate engineering time.</li>
+        <li><strong>Celebrate co-creation.</strong> Weekly community showcases and in-engine tutorials sustain the creativity loop.</li>
+      </ol>
+      <p>Sandbox City is still evolving, but the foundations—ECS-powered tooling, disciplined live operations, and a focus on empowering creators—will keep it resilient. If you&rsquo;re building large-scale UGC experiences in Unity, I&rsquo;d love to compare notes.</p>
+    </article>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; <span id="year"></span> Yilmaz Kiymaz. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

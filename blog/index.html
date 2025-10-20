@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Blog — Yilmaz Kiymaz</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    main {
+      padding-top: 3rem;
+    }
+    .blog-container {
+      max-width: 900px;
+      margin: 0 auto 4rem;
+      display: grid;
+      gap: 1.5rem;
+    }
+    .blog-card {
+      transition: transform 0.2s ease, border 0.2s ease;
+    }
+    .blog-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .tag-list {
+      gap: 0.35rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">Yilmaz Kiymaz</div>
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="#" aria-current="page">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="section">
+      <h1>Dev Blog</h1>
+      <p class="lead">Deep dives into Unity, large-scale simulation, and the production lessons I learn while building Sandbox City and client projects.</p>
+    </section>
+    <section class="section">
+      <div id="blog-container" class="blog-container"></div>
+      <template id="blog-template">
+        <article class="blog-card">
+          <time></time>
+          <h2></h2>
+          <p></p>
+          <div class="tag-list"></div>
+        </article>
+      </template>
+      <p id="empty-state" style="display:none; color: var(--text-muted);">No articles yet. Check back soon!</p>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; <span id="year"></span> Yilmaz Kiymaz. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    const blogContainer = document.getElementById('blog-container');
+    const blogTemplate = document.getElementById('blog-template');
+    const emptyState = document.getElementById('empty-state');
+
+    fetch('../data/articles.json')
+      .then((res) => res.json())
+      .then((articles) => {
+        if (!articles.length) {
+          emptyState.style.display = 'block';
+          return;
+        }
+        const sorted = articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+        sorted.forEach((article) => {
+          const clone = blogTemplate.content.cloneNode(true);
+          const timeEl = clone.querySelector('time');
+          const titleEl = clone.querySelector('h2');
+          const descEl = clone.querySelector('p');
+          const tagsEl = clone.querySelector('.tag-list');
+
+          timeEl.textContent = new Date(article.date).toLocaleDateString(undefined, {
+            year: 'numeric', month: 'long', day: 'numeric'
+          });
+          titleEl.innerHTML = `<a href="${article.slug}.html">${article.title}</a>`;
+          descEl.textContent = article.description;
+
+          article.tags?.forEach((tag) => {
+            const span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = tag;
+            tagsEl.appendChild(span);
+          });
+
+          blogContainer.appendChild(clone);
+        });
+      })
+      .catch(() => {
+        emptyState.style.display = 'block';
+      });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
