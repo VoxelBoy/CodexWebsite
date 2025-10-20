@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yilmaz Kiymaz — Unity Technical Director & Consultant</title>
+  <meta name="description" content="Unity expert Yilmaz Kiymaz helps teams ship ambitious real-time experiences. Explore Sandbox City, Unite talks, consulting services, and articles." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    .profile-card {
+      background: rgba(15, 23, 42, 0.6);
+      padding: 1.75rem;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.45);
+      display: grid;
+      gap: 1.5rem;
+    }
+    .experience-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .skills-grid {
+      display: grid;
+      gap: 0.75rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .skill-item {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 1rem;
+      padding: 0.85rem 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .project-meta {
+      color: rgba(148, 163, 184, 0.75);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .contact-card {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      align-items: center;
+    }
+    .contact-card .cta-group {
+      justify-content: flex-start;
+    }
+    .contact-card p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">Yilmaz Kiymaz</div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#talks">Talks</a>
+        <a href="#blog">Articles</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+    <div class="hero">
+      <div>
+        <h1>Unity technical director &amp; live game specialist.</h1>
+        <p class="lead">I help studios ship ambitious real-time worlds, from large-scale user-generated experiences like <strong>Sandbox City</strong> to enterprise digital twins. My focus: world-class tools, performant code, and fearless iteration.</p>
+        <div class="cta-group">
+          <a class="button button-primary" href="#contact">Book a discovery call</a>
+          <a class="button button-secondary" href="https://www.linkedin.com/in/yilmazkiymaz" target="_blank" rel="noopener">View LinkedIn</a>
+          <a class="button button-secondary" href="blog/index.html">Read the blog</a>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div>
+          <h2>What I do</h2>
+          <p class="lead">Architecting Unity systems, building creator tools, and leading hybrid teams through pre-production, launch, and live ops.</p>
+        </div>
+        <div>
+          <h3>Currently</h3>
+          <p><strong>Co-creating Sandbox City</strong>, a massive multiplayer playground that empowers players to build systems-driven worlds together.</p>
+        </div>
+        <div>
+          <h3>Previously</h3>
+          <p>Led Unity projects for immersive training, volumetric capture, and XR experiences across the games, enterprise, and research sectors.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section id="services" class="section">
+      <h2>Consulting focus</h2>
+      <div class="card-grid">
+        <article class="card">
+          <h3>Systems architecture</h3>
+          <p>Designing DOTS-friendly foundations, multiplayer backends, and data pipelines that scale from prototype to live operations.</p>
+          <div class="tag-list">
+            <span class="tag">ECS</span>
+            <span class="tag">Multiplayer</span>
+            <span class="tag">Tooling</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Workflow optimization</h3>
+          <p>Auditing project structure, build pipelines, and testing strategy so teams can iterate quickly without trading away stability.</p>
+          <div class="tag-list">
+            <span class="tag">CI/CD</span>
+            <span class="tag">Profiling</span>
+            <span class="tag">Automation</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Technical leadership</h3>
+          <p>Embedding with teams as a fractional CTO or technical director, hiring specialists, and aligning engineering with creative goals.</p>
+          <div class="tag-list">
+            <span class="tag">Team Health</span>
+            <span class="tag">Mentorship</span>
+            <span class="tag">Roadmapping</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <h2>Expertise</h2>
+      <div class="skills-grid">
+        <div class="skill-item">Unity DOTS &amp; ECS</div>
+        <div class="skill-item">C# &amp; Performance Tuning</div>
+        <div class="skill-item">Live Ops &amp; Telemetry</div>
+        <div class="skill-item">Procedural Tools</div>
+        <div class="skill-item">Multiplayer Architecture</div>
+        <div class="skill-item">XR &amp; Spatial Computing</div>
+        <div class="skill-item">DevOps &amp; Build Automation</div>
+        <div class="skill-item">Technical Leadership</div>
+      </div>
+    </section>
+
+    <section id="experience" class="section">
+      <h2>Selected work</h2>
+      <div class="timeline">
+        <article class="timeline-item" data-year="2021 — Present">
+          <h3>Sandbox City</h3>
+          <p>Technical director and platform architect for a live, systems-driven world where players author gameplay with powerful but safe creator tools.</p>
+          <ul>
+            <li>Shipped creator tooling powered by Unity ECS, Burst, and custom visual scripting.</li>
+            <li>Scaled backend services to support seasonal live events and cross-platform play.</li>
+            <li>Built the team&rsquo;s technical playbook covering testing, release, and observability.</li>
+          </ul>
+        </article>
+        <article class="timeline-item" data-year="2018 — Present">
+          <h3>Unity Consulting &amp; Fractional Leadership</h3>
+          <p>Partnered with studios, research labs, and enterprise teams to deliver XR training, real-time simulation, and interactive installation projects.</p>
+          <ul>
+            <li>Directed technical strategy for volumetric capture experiences and digital twins.</li>
+            <li>Audited large legacy Unity projects, introducing DOTS and automated testing.</li>
+            <li>Mentored internal leads, set hiring plans, and established engineering rituals.</li>
+          </ul>
+        </article>
+        <article class="timeline-item" data-year="2014 — 2018">
+          <h3>Unity Evangelism &amp; Community</h3>
+          <p>Produced sample projects, taught workshops, and presented Unite conference sessions that helped thousands of developers level up their skills.</p>
+          <ul>
+            <li>Created hands-on training on performance optimization and tool building.</li>
+            <li>Worked with Unity product teams to bring feedback from studios into the roadmap.</li>
+            <li>Launched community programs that supported meetups across EMEA.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <h2>Featured projects</h2>
+      <div class="card-grid">
+        <article class="card project-card">
+          <span class="project-meta">Live game · Sandbox City</span>
+          <h3>Sandbox City</h3>
+          <p>Co-created a creator-first sandbox that combines systemic simulation with UGC. Built the core ECS architecture, live ops tooling, and creator analytics.</p>
+          <a href="https://www.youtube.com/results?search_query=yilmaz+kiymaz+sandbox+city" target="_blank" rel="noopener">Watch Sandbox City demos</a>
+        </article>
+        <article class="card project-card">
+          <span class="project-meta">Enterprise · Spatial simulation</span>
+          <h3>Immersive digital twin platforms</h3>
+          <p>Delivered training simulators and digital twins for aerospace, energy, and manufacturing partners—bridging high-fidelity visualization with real-time data.</p>
+        </article>
+        <article class="card project-card">
+          <span class="project-meta">Research · XR tooling</span>
+          <h3>Spatial prototyping frameworks</h3>
+          <p>Built Unity editor extensions that help designers sketch XR interactions in minutes, now used in workshops and rapid prototyping bootcamps worldwide.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="talks" class="section">
+      <h2>Talks &amp; media</h2>
+      <div class="media-grid">
+        <article class="media-card">
+          <span>Unite 2023</span>
+          <h3>Designing Creator Tools that Scale with Your Community</h3>
+          <p>Showed how Sandbox City balances power and safety in its creator pipeline, from ECS-powered validation to in-editor analytics.</p>
+          <a href="https://www.youtube.com/results?search_query=Yilmaz+Kiymaz+Unite" target="_blank" rel="noopener">Watch on YouTube</a>
+        </article>
+        <article class="media-card">
+          <span>Unite 2021</span>
+          <h3>DOTS Workflows for Open-World Simulation</h3>
+          <p>Shared lessons from migrating large-scale AI systems to DOTS and keeping designers productive through abstraction layers.</p>
+          <a href="https://www.youtube.com/results?search_query=Yilmaz+Kiymaz+DOTS" target="_blank" rel="noopener">Watch on YouTube</a>
+        </article>
+        <article class="media-card">
+          <span>Podcast</span>
+          <h3>Level Up with Unity: Shipping Live Services</h3>
+          <p>Discussed live ops telemetry, team structure, and how to nurture sustainable engineering practices for long-running Unity titles.</p>
+          <a href="https://open.spotify.com/search/Yilmaz%20Kiymaz" target="_blank" rel="noopener">Listen now</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="blog" class="section">
+      <h2>Latest articles</h2>
+      <div id="latest-articles" class="blog-list"></div>
+      <p id="blog-empty" style="display:none; color: var(--text-muted);">No articles yet. When I publish a new deep dive you&rsquo;ll see it here.</p>
+      <p><a href="blog/index.html">Browse all articles &rarr;</a></p>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Let&rsquo;s work together</h2>
+      <div class="card contact-card">
+        <p>I partner with studios and innovators who need a Unity expert embedded in their team. Tell me about your project and I&rsquo;ll get back within two business days.</p>
+        <div class="cta-group">
+          <a class="button button-primary" href="mailto:hello@yilmazkiymaz.com">hello@yilmazkiymaz.com</a>
+          <a class="button button-secondary" href="https://cal.com/yilmazkiymaz" target="_blank" rel="noopener">Schedule time</a>
+        </div>
+      </div>
+      <div class="social-links" style="margin-top: 1.5rem;">
+        <a href="https://www.linkedin.com/in/yilmazkiymaz" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/yilmazkiymaz" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://twitter.com/yilmazkiymaz" target="_blank" rel="noopener">Twitter/X</a>
+        <a href="https://www.youtube.com/results?search_query=yilmaz+kiymaz" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; <span id="year"></span> Yilmaz Kiymaz. All rights reserved.</div>
+      <div>Built with accessible, lightweight HTML and CSS. No CMS maintenance required.</div>
+    </div>
+  </footer>
+  <script>
+    const latestContainer = document.getElementById('latest-articles');
+    const emptyState = document.getElementById('blog-empty');
+
+    fetch('data/articles.json')
+      .then((res) => res.json())
+      .then((articles) => {
+        if (!articles.length) {
+          emptyState.style.display = 'block';
+          return;
+        }
+        const sorted = articles.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+        sorted.forEach((article) => {
+          const card = document.createElement('article');
+          card.className = 'blog-card';
+
+          const time = document.createElement('time');
+          time.textContent = new Date(article.date).toLocaleDateString(undefined, {
+            year: 'numeric', month: 'long', day: 'numeric'
+          });
+
+          const title = document.createElement('h3');
+          title.innerHTML = `<a href="blog/${article.slug}.html">${article.title}</a>`;
+
+          const desc = document.createElement('p');
+          desc.textContent = article.description;
+
+          const tags = document.createElement('div');
+          tags.className = 'tag-list';
+          article.tags?.forEach((tag) => {
+            const span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = tag;
+            tags.appendChild(span);
+          });
+
+          card.append(time, title, desc, tags);
+          latestContainer.appendChild(card);
+        });
+      })
+      .catch(() => {
+        emptyState.style.display = 'block';
+      });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
