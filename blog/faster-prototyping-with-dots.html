@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faster Prototyping with Unity's DOTS Stack</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    main {
+      padding-top: 3rem;
+    }
+    .article {
+      max-width: 840px;
+      margin: 0 auto 4rem;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 1.5rem;
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      box-shadow: 0 15px 40px rgba(15, 23, 42, 0.45);
+    }
+    .article h1 {
+      margin-top: 0;
+      font-size: clamp(2.2rem, 4vw, 2.8rem);
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      color: rgba(148, 163, 184, 0.75);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+    .article pre {
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.75);
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+    <symbol id="icon-grid" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="8" height="8" rx="2" ry="2" fill="currentColor" />
+      <rect x="13" y="3" width="8" height="8" rx="2" ry="2" fill="currentColor" />
+      <rect x="3" y="13" width="8" height="8" rx="2" ry="2" fill="currentColor" />
+      <rect x="13" y="13" width="8" height="8" rx="2" ry="2" fill="currentColor" />
+    </symbol>
+    <symbol id="icon-briefcase" viewBox="0 0 24 24">
+      <rect x="3" y="7" width="18" height="13" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+      <path d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M3 12h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M12 12v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-mic" viewBox="0 0 24 24">
+      <path d="M12 15a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v4a4 4 0 0 0 4 4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M5 11a7 7 0 0 0 14 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M12 18v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M9 21h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-pen" viewBox="0 0 24 24">
+      <path d="M12.4 5.4 18.6 11.6 9 21H2v-7l9.4-9.6Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+      <path d="M15.5 2.5 19 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24">
+      <path d="M6 18 3 21v-4a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v4l-3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M8 6a4 4 0 0 1 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+      <path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <rect x="3" y="4" width="18" height="17" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+      <path d="M8 2v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M16 2v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M3 9h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      <rect x="7" y="13" width="3" height="3" rx="1" fill="currentColor" />
+      <rect x="14" y="13" width="3" height="3" rx="1" fill="currentColor" />
+    </symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24">
+      <path d="M22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.225 0ZM7.119 20.452H3.554V9h3.565Zm-1.782-13.02a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124ZM20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.352V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.372-1.852 3.605 0 4.27 2.373 4.27 5.459Z" fill="currentColor" />
+    </symbol>
+    <symbol id="icon-github" viewBox="0 0 24 24">
+      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.111.82-.261.82-.58 0-.287-.011-1.244-.017-2.255-3.338.726-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.758-1.333-1.758-1.089-.745.083-.73.083-.73 1.205.084 1.84 1.238 1.84 1.238 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.303-5.466-1.332-5.466-5.931 0-1.312.469-2.381 1.236-3.221-.124-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.52 11.52 0 0 1 3.003-.404c1.019.005 2.047.138 3.003.404 2.291-1.552 3.297-1.23 3.297-1.23.655 1.653.243 2.873.12 3.176.77.84 1.235 1.909 1.235 3.221 0 4.61-2.807 5.625-5.48 5.921.43.372.823 1.102.823 2.222 0 1.605-.015 2.898-.015 3.293 0 .322.216.697.825.579C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="currentColor" />
+    </symbol>
+    <symbol id="icon-twitter" viewBox="0 0 24 24">
+      <path d="M23.954 4.569a10 10 0 0 1-2.825.775 4.958 4.958 0 0 0 2.163-2.723 9.916 9.916 0 0 1-3.127 1.195 4.92 4.92 0 0 0-8.384 4.482A13.978 13.978 0 0 1 1.671 3.149a4.822 4.822 0 0 0-.666 2.475 4.92 4.92 0 0 0 2.188 4.096 4.903 4.903 0 0 1-2.228-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.935 4.935 0 0 1-2.224.084 4.936 4.936 0 0 0 4.604 3.417A9.867 9.867 0 0 1 0 19.54a13.94 13.94 0 0 0 7.548 2.212c9.142 0 14.307-7.721 13.995-14.646a9.935 9.935 0 0 0 2.411-2.537Z" fill="currentColor" />
+    </symbol>
+    <symbol id="icon-youtube" viewBox="0 0 24 24">
+      <path d="M23.498 6.186a2.997 2.997 0 0 0-2.11-2.12C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.388.566a2.997 2.997 0 0 0-2.11 2.12A31.32 31.32 0 0 0 .5 12a31.32 31.32 0 0 0 .002 5.814 2.997 2.997 0 0 0 2.11 2.12C4.495 20.5 12 20.5 12 20.5s7.505 0 9.388-.566a2.997 2.997 0 0 0 2.11-2.12A31.32 31.32 0 0 0 23.5 12a31.32 31.32 0 0 0-.002-5.814ZM9.75 15.5v-7l6 3.5-6 3.5Z" fill="currentColor" />
+    </symbol>
+    <symbol id="icon-spark" viewBox="0 0 24 24">
+      <path d="M12 2.5 14.2 8l5.3.4-4.1 3.3 1.3 5.1-4.7-2.8-4.7 2.8 1.3-5.1-4.1-3.3 5.3-.4L12 2.5Z" fill="currentColor" />
+    </symbol>
+    <symbol id="icon-cube" viewBox="0 0 24 24">
+      <path d="M12 2 4 6v12l8 4 8-4V6l-8-4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+      <path d="m4 6 8 4 8-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+      <path d="M12 22V10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+    </symbol>
+  </svg>
+  <header>
+    <nav>
+      <div class="brand">Yilmaz Kiymaz</div>
+      <div class="nav-links">
+        <a href="../index.html#services">
+          <svg class="icon" aria-hidden="true"><use href="#icon-grid"></use></svg>
+          <span>Services</span>
+        </a>
+        <a href="../index.html#experience">
+          <svg class="icon" aria-hidden="true"><use href="#icon-briefcase"></use></svg>
+          <span>Experience</span>
+        </a>
+        <a href="../index.html#talks">
+          <svg class="icon" aria-hidden="true"><use href="#icon-mic"></use></svg>
+          <span>Talks</span>
+        </a>
+        <a href="index.html" aria-current="page">
+          <svg class="icon" aria-hidden="true"><use href="#icon-pen"></use></svg>
+          <span>Blog</span>
+        </a>
+        <a href="../index.html#contact">
+          <svg class="icon" aria-hidden="true"><use href="#icon-chat"></use></svg>
+          <span>Contact</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <article class="article">
+      <p class="article-meta">
+        <span>March 18, 2024</span>
+        <span>DOTS · Performance · Workflows</span>
+      </p>
+      <h1>Faster Prototyping with Unity's DOTS Stack</h1>
+      <p>Unity&rsquo;s Data-Oriented Technology Stack has matured to the point where I use it for the earliest prototypes, not just end-game optimizations. The ability to express gameplay as data transformations unlocks workflows that are impossible with traditional, component-driven hierarchies.</p>
+      <h2>Compose systems in layers</h2>
+      <p>I start every prototype with a thin <code>IAspect</code> layer that exposes the data a designer actually cares about. Gameplay systems then operate on the aspect, not raw components. Here&rsquo;s a simplified example from our vehicle swarm tests:</p>
+      <pre><code>public readonly partial struct VehicleAspect : IAspect
+{
+    public readonly RefRO&lt;VehicleStats&gt; Stats;
+    public readonly RefRW&lt;SteeringState&gt; Steering;
+    public readonly RefRW&lt;LocalTransform&gt; Transform;
+
+    public void Integrate(float deltaTime)
+    {
+        var steering = Steering.ValueRW;
+        steering.Velocity += steering.Acceleration * deltaTime;
+        steering.Velocity = math.clamp(steering.Velocity, 0f, Stats.ValueRO.MaxSpeed);
+        Transform.ValueRW.Position += steering.Velocity * steering.Direction * deltaTime;
+    }
+}
+</code></pre>
+      <p>Designers tweak <code>VehicleStats</code> in a structured authoring window, and automated tests assert bounds so we never publish unsafe values.</p>
+      <h2>Jobs drive the iteration loop</h2>
+      <p>The Burst compiler gives immediate feedback: if a new behaviour introduces an allocation or sync point, the job debugger screams at you. We integrate this into CI so every pull request validates job safety. When we want to visualize data, an editor-only <code>SystemAPI.Query</code> draws gizmos that never ship to players.</p>
+      <h2>Hybrid components where they matter</h2>
+      <p>Not every subsystem is ready for DOTS. Audio, UI, and bespoke physics stay on GameObjects until the performance profile says otherwise. Hybrid components give me the runway to migrate pieces gradually without breaking designers&rsquo; prefabs.</p>
+      <p>If you&rsquo;re modernizing a long-running Unity project, adopting DOTS incrementally keeps momentum high. Start with the systems that gate your iteration speed, enforce Burst-friendly coding standards, and layer in automated validation early.</p>
+    </article>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; <span id="year"></span> Yilmaz Kiymaz. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
